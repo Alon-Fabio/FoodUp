@@ -1,36 +1,43 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import SearchBar from "../components/SearchBar";
-import yelp from "../API/yelp";
+import useRestaurants from "../hooks/useRestaurants";
+import RestaurantList from "../components/RestaurantList";
 
 const SearchScreen = () => {
   const [searchVal, setSearchVal] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
-  const [restaurants, setRestaurants] = useState([]);
+  const [fetchResYelp, errorMsg, restaurants] = useRestaurants(searchVal);
 
-  useEffect(() => {
-    if (searchVal === "" && restaurants.length === 0 && errorMsg === "") {
-      fetchResYelp("pasta");
-    }
-    return () => {
-      setErrorMsg("");
-    };
-  }, []);
+  // Teacher way ↓
+  // const getRest = (price) => {
+  //   return restaurants.filter((rest) => {
+  //     return rest.price === price;
+  //   });
+  // };
 
-  const fetchResYelp = async (PrTerm) => {
-    try {
-      const yelpObj = await yelp.get("/search", {
-        params: {
-          term: PrTerm,
-          limit: "50",
-          location: "san jose",
-        },
-      });
-      setRestaurants(yelpObj.data.businesses);
-    } catch {
-      setErrorMsg("Ops... the search failed, please try again later.");
-    }
+  // My way ↓
+  let restObj = {};
+
+  const filterRest = () => {
+    restObj = { lowRange: [], mediumRange: [], highRange: [] };
+    restObjc = restaurants.map((rest) => {
+      switch (rest.price) {
+        case "$":
+          restObj.lowRange.push(rest);
+          break;
+        case "$$":
+          restObj.mediumRange.push(rest);
+          break;
+        case "$$$":
+          restObj.highRange.push(rest);
+          break;
+        default:
+          break;
+      }
+    });
   };
+
+  filterRest();
 
   return (
     <View style={style.SSView}>
@@ -41,6 +48,12 @@ const SearchScreen = () => {
       />
       {errorMsg ? <Text>{errorMsg}</Text> : null}
       <Text>We found {restaurants.length} in your area!</Text>
+      {/* <RestaurantList title={"$"} restaurantList={getRest("$")} />
+      <RestaurantList title={"$$"} restaurantList={getRest("$$")} />
+      <RestaurantList title={"$$$"} restaurantList={getRest("$$$")} /> */}
+      <RestaurantList title={"$"} restaurantList={restObj.lowRange} />
+      <RestaurantList title={"$$"} restaurantList={restObj.mediumRange} />
+      <RestaurantList title={"$$$"} restaurantList={restObj.highRange} />
     </View>
   );
 };
