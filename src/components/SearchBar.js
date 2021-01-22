@@ -37,7 +37,7 @@ const style = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: "#F0EEEE",
     borderRadius: 5,
-    marginHorizontal: 20,
+    marginHorizontal: 15,
     marginVertical: 10,
   },
   SBIcon: {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import SearchBar from "../components/SearchBar";
 import useRestaurants from "../hooks/useRestaurants";
 import RestaurantList from "../components/RestaurantList";
@@ -48,12 +48,20 @@ const SearchScreen = () => {
       />
       {errorMsg ? <Text>{errorMsg}</Text> : null}
       <Text>We found {restaurants.length} in your area!</Text>
-      {/* <RestaurantList title={"$"} restaurantList={getRest("$")} />
+      <ScrollView>
+        {/* <RestaurantList title={"$"} restaurantList={getRest("$")} />
       <RestaurantList title={"$$"} restaurantList={getRest("$$")} />
       <RestaurantList title={"$$$"} restaurantList={getRest("$$$")} /> */}
-      <RestaurantList title={"$"} restaurantList={restObj.lowRange} />
-      <RestaurantList title={"$$"} restaurantList={restObj.mediumRange} />
-      <RestaurantList title={"$$$"} restaurantList={restObj.highRange} />
+        <RestaurantList
+          title={"Cost affective"}
+          restaurantList={restObj.lowRange}
+        />
+        <RestaurantList
+          title={"A bit pricier"}
+          restaurantList={restObj.mediumRange}
+        />
+        <RestaurantList title={"Costly"} restaurantList={restObj.highRange} />
+      </ScrollView>
     </View>
   );
 };
