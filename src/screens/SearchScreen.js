@@ -40,14 +40,13 @@ const SearchScreen = () => {
   filterRest();
 
   return (
-    <View style={style.SSView}>
+    <>
       <SearchBar
         searchVal={searchVal}
         onSearchChange={setSearchVal}
         onSearchSubmit={() => fetchResYelp(searchVal)}
       />
       {errorMsg ? <Text>{errorMsg}</Text> : null}
-      <Text>We found {restaurants.length} in your area!</Text>
       <ScrollView>
         {/* <RestaurantList title={"$"} restaurantList={getRest("$")} />
       <RestaurantList title={"$$"} restaurantList={getRest("$$")} />
@@ -62,9 +61,10 @@ const SearchScreen = () => {
         />
         <RestaurantList title={"Costly"} restaurantList={restObj.highRange} />
       </ScrollView>
-    </View>
+    </>
   );
 };
+SearchScreen.cardStyle = { mode: "modal", backgroundColor: "#000" };
 
 const style = StyleSheet.create({
   SSView: {

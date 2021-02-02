@@ -1,19 +1,22 @@
 import React from "react";
-import { StyleSheet, Image, Text, View } from "react-native";
+import { StyleSheet, Image, Text, View, TouchableOpacity } from "react-native";
 
-const RestaurantCard = ({ restaurant }) => {
+import { withNavigation } from "react-navigation";
+
+const RestaurantCard = ({ restaurant, navigation }) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => navigation.navigate("info", { id: restaurant.id })}
+    >
       <Image style={styles.image} source={{ uri: restaurant.image_url }} />
       <Text style={styles.text}>{restaurant.name}</Text>
       <Text>
         {restaurant.rating} stars {restaurant.review_count}
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 };
-
-export default RestaurantCard;
 
 const styles = StyleSheet.create({
   container: {
@@ -29,3 +32,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
+
+export default withNavigation(RestaurantCard);

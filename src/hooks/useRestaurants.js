@@ -7,7 +7,7 @@ export default useRestaurants = (searchVal = "") => {
 
   useEffect(() => {
     if (searchVal === "" && restaurants.length === 0 && errorMsg === "") {
-      fetchResYelp("pasta");
+      fetchResYelp("meat");
     }
     return () => {
       setErrorMsg("");
