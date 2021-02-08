@@ -3,6 +3,10 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import RestaurantCard from "./RestaurantCard";
 
 const RestaurantList = ({ title, restaurantList }) => {
+  if (!restaurantList.length) {
+    return null;
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>

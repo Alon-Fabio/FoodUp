@@ -27,6 +27,7 @@ const RestaurantInfo = ({ navigation }) => {
         data={restInfo.photos}
         keyExtractor={(photo) => photo}
         renderItem={({ item }) => {
+          //Try to change the source to {{uri: item}||null}, if all good add to note.
           return <Image source={{ uri: item }} style={styles.Image} />;
         }}
       />
